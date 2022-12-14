@@ -1,0 +1,62 @@
+<div class="container">  
+  <form class="card" [formGroup]="form" (ngSubmit)="submit()">
+    <h1>Angular Forms</h1>
+
+    <div class="form-control">
+      <label>Email</label>
+      <input type="text" placeholder="Email" formControlName="email">
+      
+      <div class="validation" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+        <small *ngIf="form.get('email')?.errors?.['required']">Поле email не может быть пустым. </small>
+        <small *ngIf="form.get('email')?.errors?.['email']" >Введите корректный email. </small>
+        <small *ngIf="form.get('email')?.errors?.['restrictedRusEmail']" >Email {{form.get('email')?.value}} запрещен Законом Украины </small>
+      </div>
+    
+    </div>
+
+    <div class="form-control">
+      <label>Пароль</label>
+      <input type="password" placeholder="Пароль" formControlName="password">
+      <div class="validation" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
+        <small *ngIf="form.get('password')?.errors?.['required']">Поле password не может быть пустым. </small>
+        <small *ngIf="form.get('password')?.errors?.['minlength']?.requiredLength">Неправильный password введите еще {{form.get('password')?.errors?.['minlength'].requiredLength - form.get('password')?.errors?.['minlength'].actualLength}} символов</small>
+      </div>    
+    </div>
+
+    <div class="card" formGroupName="address">
+      <h2>Адрес</h2>
+
+      <div class="form-control">
+        <label>Страна</label>
+
+        <select formControlName="country">
+          <option value="ua">Украина</option>
+          <option value="pl">Польша</option>
+          <option value="de">Германия</option>
+        </select>
+      </div>
+
+      <div class="form-control">
+        <input type="text" formControlName="city">
+      </div>
+
+      <button class="btn" type="button" (click)="setCapital()">Выбрать столицу</button>
+    </div>
+
+    <div class="card" formArrayName="skills">
+      <h2>Ваши навыки</h2>
+      <button class="btn" type="button" (click)="addSkill()">Добавить умение</button>
+      <div class="form-control" *ngFor="let control of skills; let idx=index">
+        <label> Умение {{idx+1}}</label>
+        <div class="d-flex">
+          <input type="text" [formControlName]="idx">
+          <button type="button" class="btn" (click)="removeSkill(idx)">-</button>
+        </div>
+      </div>
+    </div>
+    
+
+    <button class="btn" type="submit" [disabled]="form.invalid">Отправить</button>
+
+  </form>
+</div>

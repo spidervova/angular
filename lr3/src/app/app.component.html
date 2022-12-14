@@ -1,0 +1,16 @@
+<div class="container">
+  <h1>Angular Component</h1>
+  <app-post-form
+  (addPostUser)="updatePosts($event)"
+  >
+
+  </app-post-form>
+  <hr />
+  <app-post *ngFor="let p of posts" [post]="p" (postid)="removeIdPost($event)" >
+    <small *ngIf="p.text.length>10; else small">Post is long</small>
+    <ng-template #small >
+      <small> Post is short</small>
+    </ng-template>
+  </app-post>
+
+</div>

@@ -1,0 +1,26 @@
+<div class="container">
+  <h1>Angular HttpClient</h1>
+  <div class="card">
+    <div class="form-control">
+      <input type="text" placeholder="Название" [(ngModel)]="namePost">
+    </div>
+    <button class="btn" (click)="addPost()">Добавить</button>
+    <button class="btn" (click)="loadPost()">Загрузить</button>
+  </div>
+  <hr>
+  <div *ngIf="!flagLoad; else loading">
+    <div class="card" *ngFor="let post of posts">
+      <p>
+        <span [class.completed]="post.completed">{{post.title | titlecase}}</span>
+        <span>
+        <button class="btn btn-danger" (click)="removePost(post.id)">Удалить</button>
+        <button class="btn" [disabled]="post.completed" (click)="copmletedPost(post.id)">Завершить</button>
+     </span>
+      </p>
+    </div>
+
+  </div>
+  <ng-template #loading>
+    <p>Loading...</p>
+  </ng-template>
+</div>
